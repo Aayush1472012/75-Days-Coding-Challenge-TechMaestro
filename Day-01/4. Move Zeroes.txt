@@ -1,7 +1,7 @@
 //Link ---> https://leetcode.com/problems/move-zeroes/
 
 
-//code:
+//Code:
     void moveZeroes(vector<int>& nums) {
         int zeroNoInd = 0, nonZeroNoInd = 0, n = nums.size();
         while(nonZeroNoInd < n){
@@ -20,3 +20,6 @@
             }
         }
     }
+
+
+//Time Complexity => O(n)
