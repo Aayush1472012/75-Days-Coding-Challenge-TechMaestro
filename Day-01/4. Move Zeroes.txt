@@ -1,0 +1,22 @@
+//Link ---> https://leetcode.com/problems/move-zeroes/
+
+
+//code:
+    void moveZeroes(vector<int>& nums) {
+        int zeroNoInd = 0, nonZeroNoInd = 0, n = nums.size();
+        while(nonZeroNoInd < n){
+            if(nums[nonZeroNoInd]==0){
+                nonZeroNoInd++;
+            }else{
+                if(nonZeroNoInd==zeroNoInd){
+                    nonZeroNoInd++;
+                    zeroNoInd++;
+                }else{
+                    nums[zeroNoInd] = nums[nonZeroNoInd];
+                    nums[nonZeroNoInd] = 0;
+                    nonZeroNoInd++;
+                    zeroNoInd++;
+                }
+            }
+        }
+    }
