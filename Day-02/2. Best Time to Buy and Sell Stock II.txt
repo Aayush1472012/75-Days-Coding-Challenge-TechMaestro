@@ -1,0 +1,22 @@
+//Link ---> https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+
+
+//Solution - 
+    int maxProfit(vector<int>& prices) {
+        int i=0, n=prices.size()-1, buy, sell, tProfit=0;
+        while(i<n){
+	    //iterating until we get local minima
+            while(i<n && prices[i+1]<=prices[i])
+                i++;
+            buy=prices[i];
+	    //iterating until we get local maxima
+            while(i<n && prices[i+1]>prices[i])
+                i++;
+            sell=prices[i];
+            
+            tProfit += sell-buy;
+        }
+        return tProfit;
+    }
+
+//Time Complexity => O(n)

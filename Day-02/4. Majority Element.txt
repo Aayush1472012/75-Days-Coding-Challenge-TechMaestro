@@ -1,0 +1,32 @@
+//Link ---> https://leetcode.com/problems/majority-element/
+
+
+//Solution 1 -
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
+        return nums[n/2];
+    }
+
+//Time Complexity => O(n.log(n))
+
+
+//Solution 2 - (Using Moore's Voting Algorithm)
+    int majorityElement(vector<int>& nums) {
+        int n=nums.size(), no = nums[0], vote=1;
+        for(int i=1;i<n;i++){
+            if(nums[i]==no){
+                vote++;
+            }else{
+                vote--;
+            }
+            
+            if(vote==0){
+                no = nums[i];
+                vote = 1;
+            }
+        }
+        return no;
+    }
+
+//Time Complexity => O(n)
