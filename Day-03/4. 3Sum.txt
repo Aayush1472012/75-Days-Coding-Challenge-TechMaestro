@@ -1,0 +1,99 @@
+//Link ---> https://leetcode.com/problems/3sum/
+
+
+//Solution 1 - (Solution is correct but gives TLE)
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>> ans;
+        for(int i=0;i<n-2;i++){
+            for(int j=i+1;j<n-1;j++){
+                for(int k=j+1;k<n;k++){
+                    if(nums[i]+nums[j]+nums[k]==0){
+                        vector<int> t1 = {nums[i],nums[j],nums[k]};
+                        sort(t1.begin(),t1.end());
+                        if(find(ans.begin(),ans.end(),t1)==ans.end()){
+                            ans.push_back(t1);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+//Time Complexity => O(n^4.log(n))
+
+
+//Solution 2 - (Using HashMap, but gives TLE) 
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>> ans;
+        map<int,int> mpp;
+        set<vector<int>> temp;
+        for(int i=0;i<n;i++){
+            mpp[nums[i]]++;
+        }
+        // sort(nums.begin(),nums.end());
+        for(int i=0;i<n;i++){
+            mpp[nums[i]]--;
+            for(int j=i+1;j<n;j++){
+                mpp[nums[j]]--;
+                int t =0-(nums[i]+nums[j]);
+                if(mpp.find(t)!=mpp.end() && mpp[t]!=0){
+                    vector<int> t1 = {nums[i],nums[j],t};
+                    sort(t1.begin(),t1.end());
+                    temp.insert(t1);
+                }
+                mpp[nums[j]]++;
+            }
+            mpp[nums[i]]++;
+        }
+        for(auto it: temp){
+            ans.push_back(it);
+        }
+        return ans;
+    }
+
+//Time Complexity => O(n^2.log(n))
+//Space Complexity => O(m)+O(n)
+
+
+//Solution 3 - 
+//Step 1 -> Sort an array.
+//Step 2 -> Use two pointer apparoch same as used in two sum problem.
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        vector<int> t;
+        for(int i=0;i<n-2;i++){
+            if(i==0 || (i>0 && nums[i]!=nums[i-1])){
+                int j=i+1, k=n-1, x=0-nums[i];
+                //Using two pointer same as we used in two sum problem
+                while(j<k){
+                    if(nums[j]+nums[k]==x){
+                        t = {nums[i],nums[j],nums[k]};
+                        ans.push_back(t);
+                        // Moving towards end of array until we get same elements
+                        while(j<k && nums[j]==nums[j+1]){
+                            j++;
+                        }
+                        // Moving towards start of array until we get same elements
+                        while(j<k && nums[k]==nums[k-1]){
+                            k--;
+                        }
+                        j++;
+                        k--;
+                    }else if(nums[j]+nums[k]>x){
+                        k--;
+                    }else{
+                        j++;
+                    }
+                    t.clear();
+                }
+            }
+        }
+        return ans;
+    }
+
+//Time Complexity => O(n^2)
