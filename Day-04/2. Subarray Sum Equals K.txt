@@ -1,0 +1,47 @@
+//Link ---> https://leetcode.com/problems/subarray-sum-equals-k/
+
+
+//Solution 1 -
+    int subarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        int ans=0,sum;
+        
+        for(int i=0;i<n;i++){
+            sum=0;
+            for(int j=i;j<n;j++){
+                sum+=nums[j];
+                
+                if(sum==k){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+//Time Complexity => O(n^2)
+
+
+//Solution 2 -
+    int subarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        int ans=0,sum=0;
+        unordered_map<int,int> umap;
+        //inseting sum=0, because it will be used when element itself equal to sum k.
+        umap[sum]++;
+        
+        for(int i=0;i<n;i++){
+            sum += nums[i];
+            
+            //we using concept of prefix sum {prefix[i]-prefix[i-1]=k}
+            if(umap.find(sum-k)!=umap.end()){
+                //counting all possible sums
+                ans+=umap[sum-k];
+            }
+            umap[sum]++;
+        }
+        return ans;
+    }
+
+//Time Complexity => O(n)
+//Space complexity => O(n)

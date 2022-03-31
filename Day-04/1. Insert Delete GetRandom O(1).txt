@@ -1,0 +1,56 @@
+//Link ---> https://leetcode.com/problems/insert-delete-getrandom-o1/submissions/
+
+
+//Solution -
+//Map -> Insertion & Deletion takes O(1) time and random access takes O(n)
+//Vector -> Insertion at end & random access takes O(1) and delete an element by value takes O(n)
+//So, we will combine these two DS to implement class.
+//Using Map for mapping value with index where they are stored in vector.
+//Using vector to store values.
+
+class RandomizedSet {
+public:
+    unordered_map<int,int> uMap;
+    vector<int> v;
+    RandomizedSet() {
+        
+    }
+    
+    bool insert(int val) {
+        if(uMap.find(val)==uMap.end()){
+            //adding element into vector
+            v.push_back(val);
+            //storing {value, index} in map
+            uMap[val]=v.size()-1;
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    bool remove(int val) {
+        if(uMap.find(val)!=uMap.end()){
+            int tempIndex = uMap[val];
+            int last = v.back();   //gives last element
+            //changing index value of last element with given element
+            uMap[last] = uMap[val];
+            //replacing given element with last element
+            v[uMap[val]] = last;
+            //removing last element from vector
+            v.pop_back();
+            //removing val from map
+            uMap.erase(val);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    int getRandom() {
+        int n = v.size();
+        //generating random number between 0 to n
+        int retInd = rand()%n;
+        return v[retInd];
+    }
+};
+

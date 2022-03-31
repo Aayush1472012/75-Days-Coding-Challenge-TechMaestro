@@ -1,0 +1,31 @@
+//Link ---> https://leetcode.com/problems/next-permutation/
+
+
+//Solution -
+    void nextPermutation(vector<int>& nums) {
+        int n=nums.size();
+        int ind1,ind2;
+        //Move from end to start until we get a[i]<a[i+1]
+        for(ind1=n-2; ind1>=0; ind1--){
+            if(nums[ind1]<nums[ind1+1])
+                break;
+        }
+        
+        
+        if(ind1<0){
+            //Given number is like 54321, so we get ind1<0 & we reversed it
+            reverse(nums.begin(),nums.end());
+        }else{
+            //Move from end to ind1 until we get a[ind2]>a[ind1]
+            for(ind2=n-1; ind2>ind1; ind2--){
+                if(nums[ind2]>nums[ind1])
+                    break;
+            }
+            //swap a[ind1] with a[ind2] to get just bigger number than given one
+            swap(nums[ind1],nums[ind2]);
+            //reverse a[ind1+1]...a[n-1] to get smallest value for that subarray
+            reverse(nums.begin()+ind1+1, nums.end());
+        }
+    }
+
+//Time Complexity => O(n)

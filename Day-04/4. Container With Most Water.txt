@@ -1,0 +1,23 @@
+//Link ---> https://leetcode.com/problems/container-with-most-water/
+
+
+//Solution -
+    int maxArea(vector<int>& height) {
+        int finalMax=0;
+        int i=0, j=height.size()-1;
+        while(i<j){
+            //we need maximum water so we need max area. For that we need max length or max height.
+            int length = j-i;
+            int breadth = min(height[j],height[i]);
+            finalMax = max(finalMax, length*breadth);
+            
+            if(height[i]<=height[j]){
+                //if height is small in left then we will move towards right.
+                i++;
+            }else{
+                //if height is small in right then we will move towards left.
+                j--;
+            }
+        }
+        return finalMax;
+    }
